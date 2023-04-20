@@ -1,9 +1,3 @@
-//
-// Created by Kira on 20.04.2023.
-//
-
-#ifndef OVERLOADING_CLASS_H
-#define OVERLOADING_CLASS_H
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -25,6 +19,3 @@ public:
     Polynomial operator+(Polynomial &);
     Polynomial operator*(Polynomial &);
 };
-
-
-#endif //OVERLOADING_CLASS_H
