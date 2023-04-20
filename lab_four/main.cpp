@@ -1,4 +1,3 @@
-#include <iostream>
 #include "class.h"
 int main() {
     Polynomial P1, P2, P3, P4, P5 ;
