@@ -1,6 +1,6 @@
 #include "function_array.h"
 void enterDataArr(FILE* fileWork, const char* fileName) {
-    const int bufferSize = 100;
+    const int bufferSize = 1000;
     char* dataFile = new char[bufferSize];
 
     fileWork = fopen(fileName, "w");
@@ -29,13 +29,14 @@ void enterDataArr(FILE* fileWork, const char* fileName) {
 }
 
 void readFileArr(FILE* fileWork, const char* fileName) {
-    int bufferSize = 100;
+    int bufferSize = 1000;
     char *fileString = new char [bufferSize];
     fileWork = fopen(fileName, "r");
     if (fileWork == nullptr) {
         cout << "Impossible to open the file\n" << endl;
         return;
-    } while (fgets(fileString, bufferSize, fileWork)) {
+    }
+    while (fgets(fileString, bufferSize, fileWork)) {
         readStringArr( fileString);
     }
     delete [] fileString;
@@ -86,22 +87,24 @@ void outDataArr(int *arrayNum, char *textStrArr, int numberNum, int countAlf){
         return;
     }
 
-    if (textStrArr[0]!=' ') {
+    if (arrayNum[0]!=' ') {
         for (int a = 0; a < numberNum; a++) {
-            if (a!=numberNum-1) {
+            if (a != numberNum - 1) {
                 fprintf(fileP, "%d, ", *(arrayNum + a));
-            } else  if (a==numberNum-1){
-                fprintf(fileP,"%d ",*(arrayNum + a));
-            }
-        }
-        for (int qwert = 0; qwert <= countAlf - 1; ++qwert) {
-            if (textStrArr[qwert] == ' ') {
-                fprintf(fileP, ",%c", *(textStrArr + qwert));
-            } else {
-                fprintf(fileP, "%c",*(textStrArr + qwert));
+            } else if (a == numberNum - 1) {
+                fprintf(fileP, "%d ", *(arrayNum + a));
             }
         }
     }
+
+    for (int qwert = 0; qwert <= countAlf - 1; ++qwert) {
+        if (textStrArr[qwert] == ' ') {
+                fprintf(fileP, ",%c", *(textStrArr + qwert));
+        } else {
+                fprintf(fileP, "%c",*(textStrArr + qwert));
+        }
+    }
+
     fprintf(fileP, "\n");
     fclose(fileP);
 }
@@ -118,36 +121,24 @@ void readStringArr(char* Arr){
 
     do {
         if (isdigit(Arr[j])) {
-            if (countN < bufferSize - 1) {
-                numStr[countN] = Arr[j];
-                countN ++;
-                if (textStr[countAlf-1]!=' '&& countAlf!=0){
-                    textStr[countAlf]= ' ';
-                    countAlf++;
-                }
-            }
+            numStr[countN] = Arr[j];
+            countN ++;
         } else if (isalpha(Arr[j])) {
-            if (countAlf < bufferSize - 1) {
-                textStr[countAlf] = Arr[j];
-                countAlf++;
-                if (numStr[countN-1]!=' ') {
-                    numStr[countN] = ' ';
-                    countN++;
-                }
-
-            }
+            textStr[countAlf] = Arr[j];
+            countAlf++;
         } else if (isspace(Arr[j])) {
-            if ((countN < bufferSize - 1) && (numStr[countN-1]!=' ')) {
+            if ((countN < bufferSize - 1) && (numStr[countN-1]!=' ') && countAlf>0) {
                 numStr[countN] = ' ';
                 countN++;
             }
-            if ((countAlf < bufferSize - 1) && (textStr[countAlf-1]!=' ')) {
+            if ((countAlf < bufferSize - 1) && (textStr[countAlf-1]!=' ') && countN>0) {
                 textStr[countAlf] = ' ';
                 countAlf++;
             }
         }
         j++;
     } while (Arr[j] != '\n' && Arr[j] != '\0');
+
     numStr[countN] = '\0';
     textStr[countAlf] = '\0';
 
@@ -197,7 +188,7 @@ void appendFileArr(FILE* fileWork, const char* fileName){
     fclose(fileP);
 
     fileWork= fopen(fileName, "a");
-    const int bufferSize = 100;
+    const int bufferSize = 1000;
     char* dataFile = new char[bufferSize];
 
     if (fileWork == nullptr) {

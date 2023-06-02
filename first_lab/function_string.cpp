@@ -39,26 +39,36 @@ void breakingStringStr(string &str){
     int num = 0;
     int count = 0; //лічильник кількості чисел у рядку
 
-    string numStr, textStr="";
-    for(int j=0; j<str.length(); j++) {
-        do {
-            if (isdigit(str[j])) {
-                numStr += str[j];
-                spase =0;
-            } else if (isalpha(str[j])) {
-                textStr += str[j];
-                if (spase==0) {
-                    numStr += " ";
-                    spase=1;
-                }
-            } else if (isspace(str[j])) {
-                numStr += " ";
-                spase=1;
-                if (textStr!="")
-                    textStr += ", ";
+    string numStr, textStr;
+
+//    for(int j=0; j<str.length(); j++) {
+//        do {
+//            if (isdigit(str[j])) {
+//                numStr += str[j];
+//            } else if (isalpha(str[j])) {
+//                textStr += str[j];
+//            } else if (isspace(str[j])) {
+//                numStr += " ";
+//                if (textStr!="")
+//                    textStr += ", ";
+//            }
+//            j++;
+//        } while (j < str.length() && str[j] != '\n' && str[j] != '\0');
+//    }
+    bool firstWord = true;
+    string word;
+    istringstream wordStream(str);
+    while (wordStream>>word){
+        if (isdigit(word[0])) {
+            numStr += word + " ";
+        } else if (isalpha(word[0])) {
+            if (!firstWord) {
+                textStr += ", ";
+            } else {
+                firstWord = false;
             }
-            j++;
-        } while (j < str.length() && str[j] != '\n' && str[j] != '\0');
+            textStr += word;
+        }
     }
 
     stringstream ss(numStr);
@@ -78,7 +88,7 @@ void breakingStringStr(string &str){
     } else {
         str = numStr;
     }
-
+    cout<<str<<endl;
 }
 
 void readStringFromFile(ifstream &fileWithData, ofstream &outputFile,const string &outFile, const string &fileNameInput)
@@ -130,7 +140,7 @@ int findSmallStr(string numStr) {
 void enterDataInFileStr(ofstream &outputFile, const string& fileNameInput){
     string input;
     outputFile.open(fileNameInput, ios::app);
-    cout << "Enter a string:\n";
+    cout << "Enter a line (or '~' to finish): "<< endl;
     while (input != "~") {
         fflush(stdin);
         getline(cin, input);
@@ -158,16 +168,20 @@ void outputFileStr(ifstream &fileWithData, ofstream &outputFile,const string &ou
     if (!fileWithData.is_open()) {
         cout << "Impossible to open the file\nfurther behavior of the program is unpredictable" << endl;
         return;
-    }while (fileWithData.get(fileSymbol))
+    }
+    cout << "Start file"<< endl;
+    while (fileWithData.get(fileSymbol))
         cout << fileSymbol;
     fileWithData.close();
+
 
     fileWithData.open(outFile);
     if (!fileWithData.is_open()) {
         cout << "Impossible to open the file\nfurther behavior of the program is unpredictable" << endl;
         return;
-    }while (fileWithData.get(fileSymbol2))
+    }
+    cout << "End file"<< endl;
+    while (fileWithData.get(fileSymbol2))
         cout << fileSymbol2;
     fileWithData.close();
-
 }
