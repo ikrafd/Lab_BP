@@ -54,19 +54,3 @@ void functionWindow::on_pushButton_clicked()
         QMessageBox::critical(this, "Error", ex.what());
     }
 }
-
-
-
-void functionWindow::on_pushButton_2_clicked()
-{
-    QString inputText = ui->valueSecond->text();
-
-    // Convert the input value to a float
-    bool ok;
-    float enterNum = inputText.toFloat(&ok);
-
-    functionLog f(enterNum);
-    float result = f.calculate();
-
-}
-
