@@ -74,9 +74,11 @@ void menu(int size){
                 cout<<"All data clear"<<endl;
                 break;
             case 7:
+                cout<<"First element: ";
                 table.outputBegin();
                 break;
             case 8:
+                cout<<"Last element: ";
                 table.outputEnd();
                 break;
         }

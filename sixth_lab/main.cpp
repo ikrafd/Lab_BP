@@ -1,24 +1,26 @@
 #include "menu.cpp"
 
 int main() {
-    string valueType, keyType;
+    string valueType;
     int size;
     cout <<"Enter size:";
     cin >> size;
-    cout << "Enter the key type: ";
-    cin >> keyType;
-    cout << "Enter the value type: ";
-    cin >> valueType;
-    if (keyType=="int"&&valueType=="int"){
-        menu<int>(size);
-    } else if (valueType=="string") {
-        menu<string>(size);
-    } else if (valueType == "float"){
-        menu<float>(size);
-    } else if (valueType == "char"){
-        menu<float>(size);
-    }else{
-        cout<<"Not correct type"<<endl;
-    }
+    bool Error = false;
+    do {
+        cout << "Enter the value type (int, string, float, char): ";
+        cin >> valueType;
+        if (valueType == "int") {
+            menu<int>(size);
+        } else if (valueType == "string") {
+            menu<string>(size);
+        } else if (valueType == "float") {
+            menu<float>(size);
+        } else if (valueType == "char") {
+            menu<char>(size);
+        } else {
+            Error = true;
+            cout << "Not correct type" << endl;
+        }
+    } while (Error);
     return 0;
 }

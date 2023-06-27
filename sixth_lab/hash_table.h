@@ -39,6 +39,7 @@ public:
         bool operator!=(const Iterator& other) const;
     };
 
+
     Iterator beginTable() const;
     Iterator endTable() const;
 
@@ -57,6 +58,5 @@ public:
     void outputEnd();
 
 };
-
 
 

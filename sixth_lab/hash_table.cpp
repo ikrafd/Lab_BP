@@ -48,7 +48,6 @@ typename HashTable<ValueType>::Iterator HashTable<ValueType>::endTable() const {
         }
         index--;
     }
-
     return Iterator(table + index, table + sizeTable, *this);
 }
 
@@ -141,9 +140,10 @@ ValueType HashTable<ValueType>::findValue(const string key) {
 
 template<typename ValueType>
 void HashTable<ValueType>::removeAll() {
-    for (Iterator it = beginTable(); it != endTable(); ++it) {
-        (*it).deleted = true;
-        (*it).key.clear();
+    Entry<ValueType>* current = table;
+    for (int i = 0; i < sizeTable; ++i) {
+        current->deleted=true;
+        current++;
     }
     occupiedCells = 0;
 }
@@ -151,7 +151,7 @@ void HashTable<ValueType>::removeAll() {
 template<typename ValueType>
 void HashTable<ValueType>::output() {
     Iterator its = beginTable();
-    if (its != endTable()) {
+    if (its != endTable() && occupiedCells!=0) {
         cout << left << setw(10) << "Key:" << setw(10) << "Value:" << endl;
         for (its; its != endTable(); ++its) {
             cout << left << setw(10) << (*its).key << setw(10) << (*its).value << endl;
@@ -165,12 +165,19 @@ void HashTable<ValueType>::output() {
 template<typename ValueType>
 void HashTable<ValueType>::outputBegin() {
     Iterator its = beginTable();
-    cout<<(*its).key<<" "<<(*its).value<<endl;
-
+    if(!(*its).deleted && occupiedCells!=0) {
+        cout << (*its).key << " " << (*its).value << endl;
+    } else{
+        cout<<"table empty"<<endl;
+    }
 }
 
 template<typename ValueType>
 void HashTable<ValueType>::outputEnd() {
     Iterator its = endTable();
-    cout<<(*its).key<<" "<<(*its).value<<endl;
+    if(!(*its).deleted && occupiedCells!=0) {
+        cout << (*its).key << " " << (*its).value << endl;
+    } else{
+        cout<<"table empty"<<endl;
+    }
 }
