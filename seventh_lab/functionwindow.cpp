@@ -28,8 +28,11 @@ void functionWindow::on_pushButton_clicked()
         float firstArg = firstInput.toFloat(&ok1);
         float secondArg = secondInput.toFloat(&ok2);
 
-        if (!ok1 || !ok2) {
-            throw invalid_argument("Невірний формат введення");
+        if (!ok1 ||!ok2) {
+            throw invalid_argument("Невірний формат введення першого аргументу");
+        }
+        if (!ok2){
+            throw invalid_argument("Невірний формат введення другого аргументу");
         }
 
         functionLog first(firstArg), second(secondArg);

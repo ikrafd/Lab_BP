@@ -2,6 +2,6 @@
 
 inline int chooseTask() ;
 
-template <typename type>
+template <typename valueType>
 void menu(int size);
 

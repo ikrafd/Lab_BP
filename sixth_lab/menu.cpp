@@ -10,20 +10,22 @@ int chooseTask(){
                 "4 - Delete element\n"
                 "5 - Output table\n"
                 "6 - Clean table\n"
-                "7 - For end" << endl;
+                "7 - Begin table\n"
+                "8 - End table\n"
+                "9 - For end" << endl;
         cin >> choose;
-    } while (1>choose | choose>7);
+    } while (1>choose | choose>9);
     return choose;
 }
 
 
-template <typename type>
+template <typename valueType>
 void menu(int size){
     int choose;
-    type value;
+    valueType value;
     string key;
     char enter;
-    HashTable <type> table(size);
+    HashTable <valueType> table(size);
     do {
         choose = chooseTask();
         switch (choose) {
@@ -71,7 +73,12 @@ void menu(int size){
                 table.removeAll();
                 cout<<"All data clear"<<endl;
                 break;
-
+            case 7:
+                table.outputBegin();
+                break;
+            case 8:
+                table.outputEnd();
+                break;
         }
-    } while (choose!=7);
+    } while (choose!=9);
 }

@@ -18,11 +18,12 @@ class HashTable {
     Entry <ValueType> *table;
     int sizeTable;
     int occupiedCells = 0;
+
 public:
 
     class Iterator{
     private:
-        const HashTable<ValueType>&hashTable;
+        const HashTable<ValueType>& hashTable;
         Entry<ValueType>* currentEntry;
         Entry<ValueType>* tableEnd;
 
@@ -37,6 +38,7 @@ public:
 
         bool operator!=(const Iterator& other) const;
     };
+
     Iterator beginTable() const;
     Iterator endTable() const;
 
@@ -51,4 +53,10 @@ public:
     void removeAll();
     void output();
     int getOccupied();
+    void outputBegin();
+    void outputEnd();
+
 };
+
+
+

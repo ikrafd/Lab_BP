@@ -13,9 +13,9 @@ Entry<ValueType> &HashTable<ValueType>::Iterator::operator*() const {
 
 template<typename ValueType>
 typename HashTable<ValueType>::Iterator &HashTable<ValueType>::Iterator::operator++() {
-    ++currentEntry;
+    currentEntry++;
     while (currentEntry != tableEnd && currentEntry->deleted) {
-        ++currentEntry;
+        currentEntry++;
     }
     return *this;
 }
@@ -34,15 +34,24 @@ template<typename ValueType>
 typename HashTable<ValueType>::Iterator HashTable<ValueType>::beginTable() const {
     int index = 0;
     while (index < sizeTable && table[index].deleted) {
-        ++index;
+        index++;
     }
     return Iterator(table + index, table + sizeTable, *this);
 }
 
 template<typename ValueType>
 typename HashTable<ValueType>::Iterator HashTable<ValueType>::endTable() const {
-    return Iterator(table + sizeTable, table + sizeTable, *this);
+    int index = sizeTable - 1;
+    while (index >= 0) {
+        if (!table[index].deleted) {
+            break;
+        }
+        index--;
+    }
+
+    return Iterator(table + index, table + sizeTable, *this);
 }
+
 
 template< typename ValueType>
 HashTable<ValueType>::HashTable(int tableSize): sizeTable(tableSize)  {
@@ -144,12 +153,24 @@ void HashTable<ValueType>::output() {
     Iterator its = beginTable();
     if (its != endTable()) {
         cout << left << setw(10) << "Key:" << setw(10) << "Value:" << endl;
-        for ( Iterator it = beginTable(); it != endTable(); ++it) {
-            cout << left << setw(10) << (*it).key << setw(10) << (*it).value << endl;
+        for (its; its != endTable(); ++its) {
+            cout << left << setw(10) << (*its).key << setw(10) << (*its).value << endl;
         }
+        cout << left << setw(10) << (*its).key << setw(10) << (*its).value << endl;
     } else{
         cout<<"This table empty"<<endl;
     }
 }
 
+template<typename ValueType>
+void HashTable<ValueType>::outputBegin() {
+    Iterator its = beginTable();
+    cout<<(*its).key<<" "<<(*its).value<<endl;
 
+}
+
+template<typename ValueType>
+void HashTable<ValueType>::outputEnd() {
+    Iterator its = endTable();
+    cout<<(*its).key<<" "<<(*its).value<<endl;
+}
